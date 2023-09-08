@@ -5,12 +5,12 @@ import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const refs = {
-  formEl: document.querySelector('.search-form'),
-  galleryEl: document.querySelector('.gallery'),
+  formElement: document.querySelector('.search-form'),
+  galleryElement: document.querySelector('.gallery'),
   btnLoadMore: document.querySelector('.load-more'),
 };
 
-refs.formEl.addEventListener('submit', handlerSubmit);
+refs.formElement.addEventListener('submit', handlerSubmit);
 
 let lightbox = new SimpleLightbox('.gallery a', {
   captionDelay: 250,
@@ -18,7 +18,7 @@ let lightbox = new SimpleLightbox('.gallery a', {
 
 let queryValue;
 let inputValue;
-let totalNumberOfPges = 40;
+let totalNumberOfPages = 40;
 let page;
 
 async function handlerSubmit(e) {
@@ -27,15 +27,15 @@ async function handlerSubmit(e) {
   inputValue = e.target.searchQuery.value;
 
   if (inputValue === '' || inputValue.trim() === '') {
-    refs.galleryEl.innerHTML = '';
+    refs.galleryElement.innerHTML = '';
     Notiflix.Notify.info('Your query is empty. Please try again');
     return;
   }
 
   try {
-    const response = await fetchGallery(inputValue, totalNumberOfPges);
+    const response = await fetchGallery(inputValue, totalNumberOfPages);
     if (response.data.hits.length === 0) {
-      refs.galleryEl.innerHTML = '';
+      refs.galleryElement.innerHTML = '';
       // lightScroll();
       refs.btnLoadMore.classList.add('visually-hidden');
       Notiflix.Notify.info(
@@ -68,7 +68,7 @@ async function handlerSubmit(e) {
           )
       )
       .join('');
-    refs.galleryEl.innerHTML = gallery;
+    refs.galleryElement.innerHTML = gallery;
     page = 1;
     lightbox.refresh();
     Notiflix.Notify.success(
@@ -76,7 +76,7 @@ async function handlerSubmit(e) {
     );
 
     refs.btnLoadMore.classList.remove('visually-hidden');
-    if (response.data.totalHits <= totalNumberOfPges) {
+    if (response.data.totalHits <= totalNumberOfPages) {
       refs.btnLoadMore.classList.add('visually-hidden');
     }
     queryValue = inputValue;
@@ -91,7 +91,7 @@ async function handlerLoadMore(e) {
   page += 1;
 
   try {
-    const response = await fetchGallery(queryValue, totalNumberOfPges, page);
+    const response = await fetchGallery(queryValue, totalNumberOfPages, page);
     const {
       data: { hits },
     } = response;
@@ -117,7 +117,7 @@ async function handlerLoadMore(e) {
           )
       )
       .join('');
-    refs.galleryEl.insertAdjacentHTML('beforeend', gallery);
+    refs.galleryElement.insertAdjacentHTML('beforeend', gallery);
     lightbox.refresh();
 
     if (

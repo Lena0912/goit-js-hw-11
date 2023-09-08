@@ -1,11 +1,11 @@
 :root {
-    --color-text: #2e2f42;
-    --color-text-input: #9e9c9c;
-    --bg-color: #c6c7c1;
-    --bg-form: #a3d0c3;
-    --bg-input: #f9f0da;
-    --color-btn: #7ba7ab;
-    --acent-btn: #2c6d73;
+    --color-text: #23232b;
+    --color-text-input: #8f8c8c;
+    --bg-color: #e2fa7a;
+    --bg-form: #33d865;
+    --bg-input: #e9d7a9;
+    --color-btn: #2e4987;
+    --acent-btn: #6d7eea;
 }
 
 /* Глобальні стилі нормалізація та reset */
